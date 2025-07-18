@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <pthread.h>
 
+// gcc -Wall main.c -o main
+
 void *callback_fn(void *args)
 {
     const char *input_string = (char *)args;

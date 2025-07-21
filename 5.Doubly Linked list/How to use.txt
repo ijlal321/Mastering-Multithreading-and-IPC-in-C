@@ -1,0 +1,10 @@
+compile and create to lib
+
+gcc -c -Wall DLinkedL.c             # Compile to object file
+ar rcs libDLinkedL.a DLinkedL.o     # Create static library
+
+usage
+
+gcc main.c -L. -lDLinkedL -o main
+
+

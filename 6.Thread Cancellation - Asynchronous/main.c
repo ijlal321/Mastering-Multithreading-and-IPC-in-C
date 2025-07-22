@@ -16,6 +16,7 @@ void closeFile(void* args){
 
 void *write_to_file(void *args)
 {
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
     int id = *(int *)args;
     char * fileName = malloc(sizeof(char) * 30);
 

@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "dlinkedl.h": "c"
+        "dlinkedl.h": "c",
+        "stdbool.h": "c"
     }
 }

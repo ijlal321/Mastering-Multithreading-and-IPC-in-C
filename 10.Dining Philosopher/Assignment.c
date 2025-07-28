@@ -83,13 +83,12 @@ void philosopher_release_both_spoons(phil_t *phil)
 
     left_spoon->is_used = false;
     left_spoon->phil = NULL;
-    
+
     right_spoon->is_used = false;
     right_spoon->phil = NULL;
 
     pthread_mutex_unlock(&right_spoon->mutex);
     pthread_mutex_unlock(&left_spoon->mutex);
-
 }
 
 bool philosopher_get_access_both_spoons(phil_t *phil)
@@ -176,6 +175,7 @@ int main(int argc, char **argv)
         pthread_create(&phil[i].thread_handle, &attr, philosopher_fn, &phil[i]);
     }
 
-    pthread_exit(0);
+    sleep(10);
+    // pthread_exit(0);
     return 0;
 }

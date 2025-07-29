@@ -1,28 +1,34 @@
-# Ignore all executable files
-*.exe
-*.out
-*.app
-*.bin
-*.dll
-*.so
-*.dylib
-*.class
-*.o
-*.obj
-*.elf
-*.a
-*.lib
+# ==== OS/Editor Junk ====
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
 
-# Ignore files with execute permission (Unix)
-*.run
-*.sh
-*.bat
-*.cmd
 
-# Ignore all files without extension (commonly executables)
-*.*
-
-!.gitignore # explicitly allow .gitignore (optional safety)
-
-# But do not ignore directories
+# ==== Executables (Linux/macOS, usually no extension) ====
+# Ignore all files without an extension (like "main")
+*
+!*.*
 !*/
+
+# ==== GCC Output / ELF binaries ====
+*.out
+*.elf
+*.bin
+*.a
+*.so
+*.exe
+*.dll
+
+# ==== Optional: Backup & Logs ====
+*.log
+*.bak
+*.tmp
+
+# ==== Don't ignore important files ====
+!.gitignore
+!*.c
+!*.cpp
+!*.h
+!*.hpp
+!Makefile

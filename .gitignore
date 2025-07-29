@@ -1,0 +1,28 @@
+# Ignore all executable files
+*.exe
+*.out
+*.app
+*.bin
+*.dll
+*.so
+*.dylib
+*.class
+*.o
+*.obj
+*.elf
+*.a
+*.lib
+
+# Ignore files with execute permission (Unix)
+*.run
+*.sh
+*.bat
+*.cmd
+
+# Ignore all files without extension (commonly executables)
+
+
+!.gitignore # explicitly allow .gitignore (optional safety)
+
+# But do not ignore directories
+!*/

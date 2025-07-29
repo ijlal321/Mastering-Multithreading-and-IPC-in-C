@@ -20,7 +20,7 @@
 *.cmd
 
 # Ignore all files without extension (commonly executables)
-
+*.*
 
 !.gitignore # explicitly allow .gitignore (optional safety)
 

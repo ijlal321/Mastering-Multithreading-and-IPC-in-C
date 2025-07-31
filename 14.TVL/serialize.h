@@ -33,4 +33,5 @@ int  is_serialized_buffer_empty(ser_buff_t *b);
 
 void de_serialize_string(char *dest, ser_buff_t *b, int val_size);
 
+void copy_in_serialized_buffer_by_offset(ser_buff_t *b, int size, char *value, int offset);
 #endif

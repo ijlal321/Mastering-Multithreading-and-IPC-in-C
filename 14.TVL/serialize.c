@@ -57,9 +57,26 @@ int  is_serialized_buffer_empty(ser_buff_t *b){
 }
 
 void de_serialize_string(char *dest, ser_buff_t *b, int val_size){
-    
+    if(!b || !b->b) assert(0);
+    if(!val_size) assert(0);;
+
+    if((b->size - b->next)< val_size) assert(0);
+
+    memcpy(dest, b->b + b->next, val_size);
+
+    b->next += val_size;
+}
+
+void copy_in_serialized_buffer_by_offset(ser_buff_t *b, int size, char *value, int offset){
+    if ((b->size - offset) < size)
+    {
+        printf("%s(): Error : Insufficient buffer space\n", __FUNCTION__);
+        return;
+    }
+
+    memcpy(b->b + offset, value, size);
 }
 
 int main(){
-
+    
 }

@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "dlinkedl.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "serialize.h": "c"
     }
 }

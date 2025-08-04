@@ -14,39 +14,47 @@
 // string size cannot be greater than 108 - See sockaddr_un implementation.
 #define MAX_NR_CLIENTS 3
 
-int Client_Socket[MAX_NR_CLIENTS];
+typedef struct {
+    int client_socket;
+    int client_id;
+} ClientData;
+
 
 void *thread_callbk(void *args)
 {
-    int client_nr = (int)(intptr_t)args;
-    int client_socket = Client_Socket[client_nr];
+    ClientData * client_data = (ClientData *)args;
 
-    printf("Client %d is connected and waiting for messages in new thread\n", client_nr);
+    printf("Client %d is connected and waiting for messages in new thread\n", client_data->client_id);
 
-    int sum = 0;
+
     while(1){
-        int buffer;
-        int size = read(client_socket, &buffer, sizeof(buffer));
+        char buffer[50];
+        int size = read(client_data->client_socket, &buffer, sizeof(buffer));
         if (size <= 0){
             printf("some issue reading data from client\n");
             exit(EXIT_FAILURE);
         }
-        if (buffer == 0){
-            printf("Total sum is 100\n");
+
+        // always terminating string. Even in case actual string in small.
+        buffer[sizeof(buffer) - 1] = '\0';  
+
+        if (strcmp(buffer, "0") == 0){
+            printf("Reached the end of line...byeeee\n");
             break;
         }
-        printf("buffer we got is: %d \n", buffer);
+        printf("buffer we got is: %s \n", buffer);
     }
-
-    int write_res = write(client_socket, &sum, sizeof(sum));
+/*
+    int write_res = write(client_data->client_socket, &sum, sizeof(sum));
     if (write_res <= 0){
         printf("error writing to client\n");
         exit(EXIT_FAILURE);
-    }
+    }*/
 
-    close(client_socket);
+    close(client_data->client_socket);
     return NULL;
 }
+
 
 int main()
 {
@@ -72,12 +80,13 @@ int main()
     socklen_t addr_len = sizeof(sock_addr); // need to pass to accept fn
 
     for (int i = 0; i < MAX_NR_CLIENTS; i++)
-    {
-        Client_Socket[i] = accept(connection_socket, (struct sockaddr *)&sock_addr, &addr_len);
+        {
+        ClientData * new_client_data = malloc(sizeof(ClientData));
+        new_client_data->client_socket = accept(connection_socket, (struct sockaddr *)&sock_addr, &addr_len);
+        new_client_data->client_id = i;
 
-        pthread_create(&threads[i], &thread_attr, thread_callbk, (void *)(intptr_t)(i));
-
-    }
+        pthread_create(&threads[i], &thread_attr, thread_callbk, (void *)new_client_data);
+        }
     
     pthread_attr_destroy(&thread_attr);
 

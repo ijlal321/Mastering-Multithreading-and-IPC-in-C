@@ -33,16 +33,48 @@ int main()
     // write
     while (1)
     {
-        int input_data;
-        scanf("%d", &input_data);
-        printf("the user entered %d\n", input_data);
-        int write_res = write(connection_socket, &input_data, sizeof(input_data));
-        if (write_res <= 0){
+        char input_data[50];
+        printf("enter your data: ");
+        fgets(input_data, sizeof(input_data), stdin);
+
+        /*
+            fget explanation. it will always read n-1 size input. and attach \n in end if more size.
+
+            data[5]
+            input -> 123456enter
+            data-> 1,2,3,4,\0     (rest is still in buffer 5,6,\n)
+
+            input -> 1,2,enter
+            data-> 1,2,\n,\0,\0
+
+        */
+
+        // Check if newline is included in input data
+        char *newline = strchr(input_data, '\n');
+        if (newline) // newline in input data, meaning no overflow
+        {
+            *newline = '\0'; // Replace newline with null terminator
+        }
+        else // in case of overflow, flush extra
+        {
+            int ch;
+            while ((ch = getchar()) != '\n' && ch != EOF)
+                ; // Flush stdin
+        }
+
+        printf("You entered: \"%s\"\n", input_data);
+
+        int write_res = write(connection_socket, input_data, strlen(input_data) + 1);
+        // +1 to include null terminator too (as strlen dont include it)
+
+        if (write_res <= 0)
+        {
             printf("Error writin data to server %d", write_res);
             exit(EXIT_FAILURE);
         }
 
-        if (input_data == 0){
+        if (strcmp(input_data, "0") == 0)
+        {
             break;
         }
     }
@@ -50,7 +82,8 @@ int main()
     // read
     int server_res;
     int read_res = read(connection_socket, &server_res, sizeof(server_res));
-    if (read_res <= 0){
+    if (read_res <= 0)
+    {
         printf("error reading data from server\n");
         exit(EXIT_FAILURE);
     }

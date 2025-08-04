@@ -3,6 +3,7 @@
         "dlinkedl.h": "c",
         "stdbool.h": "c",
         "serialize.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "cstdlib": "c"
     }
 }

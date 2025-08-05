@@ -4,6 +4,7 @@
         "stdbool.h": "c",
         "serialize.h": "c",
         "string.h": "c",
-        "cstdlib": "c"
+        "cstdlib": "c",
+        "un.h": "c"
     }
 }

@@ -1,0 +1,29 @@
+things to keep in mind
+
+1.
+there can be multiple revievers and writers
+
+1.1. in case of writers, no need for anything extra. 
+POSIX message queues are thread-safe and process-safe for sending (mq_send).
+Multiple senders can safely write to the same queue at the same time — the kernel handles internal synchronization.
+
+1.2. in case of multiple reading :
+read are thread safe, so no error when multiple readers read. But who will read first ? will be decided by os.
+While multiple receivers can call mq_receive() concurrently, there's a race condition risk.
+
+you might need it if your app design demands it. more on this later in life
+
+2.
+when first time opening queue, attr (queue size, size of each msg) but be specified. 
+If not then default are used.
+In case someone else tries to open queue with diff attr, they are always ignored
+
+
+3. Flags and Access Modes
+You can open the queue with different flags:
+O_RDONLY – read-only
+O_WRONLY – write-only
+O_RDWR – read/write
+But remember: if multiple readers open the queue, they all may compete for messages.
+You can have multiple readers, but coordination is up to you.
+

@@ -5,6 +5,9 @@
         "serialize.h": "c",
         "string.h": "c",
         "cstdlib": "c",
-        "un.h": "c"
+        "un.h": "c",
+        "socket.h": "c",
+        "select.h": "c",
+        "shared.h": "c"
     }
 }

@@ -8,6 +8,7 @@
         "un.h": "c",
         "socket.h": "c",
         "select.h": "c",
-        "shared.h": "c"
+        "shared.h": "c",
+        "bridge.h": "c"
     }
 }
